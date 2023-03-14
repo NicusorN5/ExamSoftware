@@ -2,3 +2,7 @@
 *.lock
 *.vsidx
 *.cache
+*.dll
+*.p7s
+*.xml
+packages/
