@@ -44,9 +44,16 @@ namespace ExamSoftware
 			}
 		}
 
-		public List<Course> GetCourses()
+		/// <summary>
+		/// Returns shallow copies of the courses.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<Course> GetCourses()
 		{
-			return _courses;
+			for(int i= 0; i < _courses.Count; i++) 
+			{
+				yield return _courses[i];
+			}
 		}
 		public void AddCourse(Course course)
 		{

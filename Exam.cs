@@ -25,6 +25,8 @@ namespace ExamSoftware
 			_freePoints = freePoints;
 			_teacher = teacher;
 			_student = student;
+
+			_answers = new List<object>();
 		}
 
 		int _numQuestions;
@@ -41,6 +43,8 @@ namespace ExamSoftware
 
 		Teacher _teacher;
 		Student _student;
+
+		List<object> _answers;
 
 		public ExamQuestion GetNextQuestion()
 		{
@@ -60,6 +64,8 @@ namespace ExamSoftware
 			bool correct = _questions[_currentIndex].VerifyAnswer(answer);
 			if (correct) _correctAnswers++;
 			if (_totalAnswers >= _numQuestions) _finished = true;
+
+			_answers.Add(answer);
 		}
 
 		public float? Grade()
@@ -76,6 +82,20 @@ namespace ExamSoftware
 			return g >= _minimumGrade;
 		}
 
-		/*TODO: write a function that returns the text questions*/
+		public IEnumerable<object> Answers
+		{
+			get
+			{
+				if (!_finished)
+				{
+					yield return null;
+					yield break;
+				}
+				for (int i = 0; i < _answers.Count; i++)
+				{
+					yield return _answers[i];
+				}
+			}
+		}
 	}
 }

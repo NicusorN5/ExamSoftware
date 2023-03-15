@@ -23,9 +23,15 @@ namespace ExamSoftware
 		{
 			_exams.Add(exam);
 		}
-		void a()
-		{
 
+		public Exam this[int i]
+		{
+			get { return _exams[i]; }
+		}
+
+		public void RemoveExam(int i) 
+		{
+			_exams.RemoveAt(i);
 		}
 	}
 }
