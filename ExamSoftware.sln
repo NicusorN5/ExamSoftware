@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamSoftware", "ExamSoftware.csproj", "{A903ED03-7004-481F-A8FD-26E1CC7811AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamData", "ExamData.csproj", "{A903ED03-7004-481F-A8FD-26E1CC7811AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamApp", "..\ExamApp\ExamApp.csproj", "{189A87C6-1E5A-475B-BE09-9572A074DE4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A903ED03-7004-481F-A8FD-26E1CC7811AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A903ED03-7004-481F-A8FD-26E1CC7811AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A903ED03-7004-481F-A8FD-26E1CC7811AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{189A87C6-1E5A-475B-BE09-9572A074DE4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{189A87C6-1E5A-475B-BE09-9572A074DE4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{189A87C6-1E5A-475B-BE09-9572A074DE4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{189A87C6-1E5A-475B-BE09-9572A074DE4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

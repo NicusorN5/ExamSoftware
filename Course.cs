@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ExamSoftware
 {
-	class Course
+	public class Course
 	{
 		public Course(string name)
 		{

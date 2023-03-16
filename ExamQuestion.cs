@@ -27,13 +27,6 @@ namespace ExamSoftware
 		}
 		string[] _answers; 
 
-		enum answerType
-		{
-			Text,
-			MultipleChoices,
-			OneChoice,
-		}
-
 		//Can be either a int, int[] or string.
 		public object CorrectAnswer
 		{

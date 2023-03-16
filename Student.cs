@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExamSoftware
 {
-	class Student
+	public class Student
 	{
 		public Student(int id, string fName, string lName, DateTime birthTime)
 		{

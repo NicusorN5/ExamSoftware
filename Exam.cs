@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExamSoftware
 {
-	class Exam
+	public class Exam
 	{
 		/// <summary>
 		/// Represents a test or exam that has a collections of questions that can be answered by a student.

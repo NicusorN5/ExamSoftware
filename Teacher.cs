@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ExamSoftware
 {
-	class Teacher
+	public class Teacher
 	{
 		public Teacher(string name)
 		{
@@ -33,5 +34,5 @@ namespace ExamSoftware
 		{
 			_exams.RemoveAt(i);
 		}
-	}
+    }
 }
