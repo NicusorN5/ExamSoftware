@@ -32,7 +32,10 @@ namespace ExamSoftware
 		{
 			get
 			{
-				return _correctAnswer;
+				if (_correctAnswer.GetType() == typeof(int))
+					return _answers[(int)_correctAnswer];
+				else 
+					return _correctAnswer;
 			}
 		}
 		//something like std::variant<int, std::span<int>, std::string>.
@@ -59,7 +62,7 @@ namespace ExamSoftware
 
 		public bool VerifyAnswer(object answer) 
 		{
-			return answer == _correctAnswer;
+			return answer == CorrectAnswer;
 		}
 	}
 }
