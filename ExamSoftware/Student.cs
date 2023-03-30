@@ -14,6 +14,7 @@ namespace ExamSoftware
 			_firstName = fName;
 			_lastName = lName;
 			_birthDate = birthTime;
+			_courses = new List<Course>();
 		}
 
 		string _firstName;
