@@ -1,0 +1,15 @@
+D:\Facultate\ExamUnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+D:\Facultate\ExamUnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+D:\Facultate\ExamUnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+D:\Facultate\ExamUnitTests\bin\Debug\Microsoft.TestPlatform.AdapterUtilities.dll
+D:\Facultate\ExamUnitTests\bin\Debug\ExamUnitTests.dll
+D:\Facultate\ExamUnitTests\bin\Debug\ExamUnitTests.pdb
+D:\Facultate\ExamUnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+D:\Facultate\ExamUnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+D:\Facultate\ExamUnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+D:\Facultate\ExamUnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+D:\Facultate\ExamUnitTests\obj\Debug\ExamUnitTests.csproj.AssemblyReference.cache
+D:\Facultate\ExamUnitTests\obj\Debug\ExamUnitTests.csproj.CoreCompileInputs.cache
+D:\Facultate\ExamUnitTests\obj\Debug\ExamUnitTests.csproj.CopyComplete
+D:\Facultate\ExamUnitTests\obj\Debug\ExamUnitTests.dll
+D:\Facultate\ExamUnitTests\obj\Debug\ExamUnitTests.pdb

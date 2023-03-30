@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ExamSoftware
 {
-	class ExamQuestion
+	public class ExamQuestion
 	{
 		/// <summary>
 		/// The question formatted in Markdown format.

@@ -1,0 +1,5 @@
+D:\Facultate\ExamSoftware\obj\Debug\ExamSoftware.csproj.AssemblyReference.cache
+D:\Facultate\ExamSoftware\obj\Debug\ExamSoftware.csproj.SuggestedBindingRedirects.cache
+D:\Facultate\ExamSoftware\obj\Debug\ExamSoftware.Properties.Resources.resources
+D:\Facultate\ExamSoftware\obj\Debug\ExamSoftware.csproj.GenerateResource.cache
+D:\Facultate\ExamSoftware\obj\Debug\ExamSoftware.csproj.CoreCompileInputs.cache
