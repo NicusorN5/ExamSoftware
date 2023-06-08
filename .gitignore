@@ -1,0 +1,11 @@
+*.pdb
+*.dll
+*.exe
+*.testlog
+*.log
+ExamApp/bin/Debug/Database.users
+*.dll
+*.cache
+*.pdb
+*.testlog
+*.db

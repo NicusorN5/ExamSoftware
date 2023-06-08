@@ -15,7 +15,7 @@ namespace ExamSoftware
 		/// <param name="minReqGrade">minimal grade requires to pass the exam</param>
 		/// <param name="freePoints">cate puncte din din oficiu</param>
 		/// <param name="questionList">question list</param>
-		public Exam(Teacher teacher, Student student, int numQuestions, float minReqGrade, float freePoints, List<ExamQuestion> questionList)
+		public Exam(int numQuestions, float minReqGrade, float freePoints, List<ExamQuestion> questionList)
 		{
 			_questions = questionList;
 			_numQuestions = numQuestions;
@@ -23,8 +23,6 @@ namespace ExamSoftware
 			_finished = false;
 			_minimumGrade = minReqGrade;
 			_freePoints = freePoints;
-			_teacher = teacher;
-			_student = student;
 
 			_answers = new List<object>();
 		}
@@ -40,9 +38,6 @@ namespace ExamSoftware
 
 		float _minimumGrade;
 		float _freePoints;
-
-		Teacher _teacher;
-		Student _student;
 
 		List<object> _answers;
 
