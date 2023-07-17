@@ -9,3 +9,7 @@ ExamApp/bin/Debug/Database.users
 *.pdb
 *.testlog
 *.db
+*.xml
+*.lock
+.*vsidx
+*.suo
