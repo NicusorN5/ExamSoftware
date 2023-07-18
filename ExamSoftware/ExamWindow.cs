@@ -16,15 +16,45 @@ namespace ExamApp
 	{
 		Exam exam;
 
+		public Exam Exam
+		{
+			get
+			{
+				return exam;
+			}
+		}
+
 		public ExamWindow(string text)
 		{
 			InitializeComponent();
 
 			exam = Exam.ReadFromFiles(text);
+			SetNextQuestion();
+		}
 
-			foreach(ExamQuestion examQuestion in exam.Questions)
+		int currentIndex;
+
+		public int NumCorrectAnswers
+		{
+			get
 			{
+				return exam.NumCorrectAnswers;
+			}
+		}
 
+		ExamQuestion currentQuestion;
+
+		void SetNextQuestion()
+		{
+			currentQuestion = exam.GetNextQuestion();
+			if (currentQuestion == null) return;
+
+			questionTb.Text = currentQuestion.Question;
+
+			answersTb.Items.Clear();
+			foreach (var answer in currentQuestion.Answers)
+			{
+				answersTb.Items.Add(answer);
 			}
 		}
 
@@ -32,7 +62,26 @@ namespace ExamApp
 
 		private void ExamWindow_Load(object sender, EventArgs e)
 		{
+			
+		}
 
+		private void button1_Click(object sender, EventArgs e)
+		{
+			int c = 0;
+			foreach(string item in answersTb.SelectedItems)
+			{
+				exam.AnswerQuestion(item);
+			}
+				
+			SetNextQuestion();
+
+			if (currentQuestion == null)
+			{
+				exam.Grade();
+				
+				DialogResult = DialogResult.OK;
+				Close();
+			}
 		}
 	}
 }

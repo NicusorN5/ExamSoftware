@@ -23,3 +23,6 @@ D:\Facultate\ExamSoftware\ExamSoftware\obj\Debug\net6.0-windows\ExamSoftware.pdb
 D:\Facultate\ExamSoftware\ExamSoftware\obj\Debug\net6.0-windows\ExamSoftware.genruntimeconfig.cache
 D:\Facultate\ExamSoftware\ExamSoftware\obj\Debug\net6.0-windows\ref\ExamSoftware.dll
 D:\Facultate\ExamSoftware\ExamSoftware\obj\Debug\net6.0-windows\ExamSoftware.AddAnswerDialog.resources
+D:\Facultate\ExamSoftware\ExamSoftware\bin\Debug\net6.0-windows\Markdig.dll
+D:\Facultate\ExamSoftware\ExamSoftware\obj\Debug\net6.0-windows\ExamSoftware.StudentMenu.resources
+D:\Facultate\ExamSoftware\ExamSoftware\obj\Debug\net6.0-windows\ExamSoftware.csproj.CopyComplete

@@ -18,7 +18,7 @@ namespace ExamSoftware
 		public Exam(string name, string course, int numQuestions, float minReqGrade, float freePoints, List<ExamQuestion> questionList)
 		{
 			_questions = questionList;
-			_numQuestions = numQuestions;
+			_numQuestions = questionList.Count;
 			GetNextQuestion();
 			_finished = false;
 			_minimumGrade = minReqGrade;
@@ -27,6 +27,8 @@ namespace ExamSoftware
 			_answers = new List<object>();
 			_name = name;
 			_course = course;
+
+			_currentIndex = -1;
 		}
 
 		int _numQuestions;
@@ -34,6 +36,14 @@ namespace ExamSoftware
 		int _currentIndex;
 
 		int _correctAnswers;
+		public int NumCorrectAnswers
+		{
+			get
+			{
+				return _correctAnswers;
+			}
+		}
+
 		int _totalAnswers;
 
 		bool _finished;
@@ -76,15 +86,23 @@ namespace ExamSoftware
 			}
 		}
 
+		public int NumQuestions
+		{
+			get
+			{
+				return _numQuestions;
+			}
+		}
+
 		public ExamQuestion GetNextQuestion()
 		{
-			if (_finished) return null;
+			if (_currentIndex == _questions.Count - 1)
+			{
+				_finished = true;
+				return null;
+			}
 
-			Random r = new Random();
-			int i = r.Next(0, _questions.Count);
-
-			_currentIndex = i;
-			return _questions[i];
+			return _questions[++_currentIndex];
 		}
 
 		public void AnswerQuestion(string answer)
@@ -101,7 +119,7 @@ namespace ExamSoftware
 		public float? Grade()
 		{
 			if (!_finished) return null;
-			return (((float)_correctAnswers / (float)_numQuestions) * 10.0f) + _freePoints;
+			return (((float)_correctAnswers / (float)_numQuestions) * (10.0f - _freePoints)) + _freePoints;
 		}
 
 		public bool? Passed()
@@ -153,7 +171,9 @@ namespace ExamSoftware
 					int[] answers = new int[answersStr.Length];
 					for (int k = 0; k < answers.Length; k++)
 					{
-						answers[k] = Convert.ToInt32(answersStr[k]);
+						if (!string.IsNullOrEmpty(answersStr[k]))
+							answers[k] = Convert.ToInt32(answersStr[k]);
+						else answers[k] = answers[k - 1];
 					}
 
 					string question = File.ReadAllText(examName + "_" + i + ".question");
@@ -192,6 +212,14 @@ namespace ExamSoftware
 			foreach (ExamQuestion q in Questions)
 			{
 				File.WriteAllText(Name + "_" + i + ".question", q.Question);
+
+				List<string> answers = new List<string>();
+				foreach (var answer in q.Answers)
+				{
+					answers.Add(answer);
+				}
+				File.WriteAllLines(Name + "_" + i + ".a", answers);
+
 				++i;
 
 				int j = 0;
@@ -202,13 +230,6 @@ namespace ExamSoftware
 					cAnsw += correctAnswer + " ";
 				}
 				examData.Add(cAnsw);
-
-				List<string> answers = new List<string>();
-				foreach (var answer in q.Answers)
-				{
-					answers.Add(answer);
-				}
-				File.WriteAllLines(Name + "_" + i + ".a", answers);
 			}
 
 			File.WriteAllLines(Name + ".exam", examData);

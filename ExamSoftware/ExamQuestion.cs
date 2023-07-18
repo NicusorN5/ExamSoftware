@@ -30,9 +30,9 @@ namespace ExamSoftware
 
 		public bool VerifyAnswer(string answer) 
 		{
-			foreach(string qanswer in Answers)
+			foreach(int qanswer in CorrectAnswers)
 			{
-				if (qanswer == answer) return true;
+				if (Answers[qanswer] == answer) return true;
 			}
 			return false;
 		}

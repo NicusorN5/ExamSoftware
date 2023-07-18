@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -26,6 +27,8 @@ namespace ExamApp
 
 		public ExamCreator(Exam exam)
 		{
+			InitializeComponent();
+
 			examNameTextbox.Text = exam.Name;
 			courseName.Text = exam.Course;
 			minimalScoreTb.Text = exam.MinimumGrade + "";
@@ -33,7 +36,20 @@ namespace ExamApp
 
 			questions = (List<ExamQuestion>?)exam.Questions;
 
-			loadQuestion(0);
+			questionTextbox.Text = questions[0].Question;
+
+			foreach (string question in questions[0].Answers)
+			{
+				checkedListBox1.Items.Add(question);
+			}
+
+			if (questions[0].CorrectAnswers != null)
+			{
+				foreach (int correctAnswerIndex in questions[0].CorrectAnswers)
+				{
+					checkedListBox1.SetItemChecked(correctAnswerIndex, true);
+				}
+			}
 		}
 
 		public Exam Exam { get; private set; }
@@ -47,17 +63,20 @@ namespace ExamApp
 
 		private void btnOk_Click(object sender, EventArgs e)
 		{
-			Exam = new Exam(
-				examNameTextbox.Text,
-				courseName.Text,
-				_numQuestions,
-				Convert.ToSingle(minimalScoreTb.Text),
-				Convert.ToSingle(freePointsTb.Text),
-				questions
-			);
+			if (saveCurrentAnswer())
+			{
+				Exam = new Exam(
+					examNameTextbox.Text,
+					courseName.Text,
+					_numQuestions,
+					Convert.ToSingle(minimalScoreTb.Text),
+					Convert.ToSingle(freePointsTb.Text),
+					questions
+				);
 
-			DialogResult = DialogResult.OK;
-			Close();
+				DialogResult = DialogResult.OK;
+				Close();
+			}
 		}
 
 		private void previousQuestion_Click(object sender, EventArgs e)
@@ -128,8 +147,8 @@ namespace ExamApp
 			switch (correctAnswers.Length)
 			{
 				case 0:
-					questions[currentQuestionIndex] = new ExamQuestion(questionTextbox.Text, allAnswers, null);
-					return true;
+					MessageBox.Show("Please put atleast one correct answer!");
+					return false;
 				case 1:
 					questions[currentQuestionIndex] = new ExamQuestion(questionTextbox.Text, allAnswers, new int[] { checkedListBox1.CheckedIndices[0] });
 					return true;

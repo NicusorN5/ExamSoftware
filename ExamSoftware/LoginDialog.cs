@@ -49,7 +49,9 @@ namespace ExamApp
 
 								case "student":
 								default:
-									
+									var studentMenu = new StudentMenu(new Student(0, firstNameTextbox.Text, lastNameTextbox.Text, DateTime.MinValue));
+									studentMenu.ShowDialog();
+									Close();
 									break;
 							}
 

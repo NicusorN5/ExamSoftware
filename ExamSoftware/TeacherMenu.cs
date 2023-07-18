@@ -27,6 +27,7 @@ namespace ExamApp
 			if (r == DialogResult.OK)
 			{
 				dialog.Exam.SaveExam();
+				listView1.Items.Add(new ListViewItem(new string[] { dialog.Exam.Name, dialog.Exam.Course, dialog.Exam.NumQuestions + "" }));
 			}
 		}
 
@@ -41,6 +42,7 @@ namespace ExamApp
 				if(r == DialogResult.OK)
 				{
 					dialog.Exam.SaveExam();
+					listView1.Items[listView1.SelectedIndices[0]] = new ListViewItem(new string[] { dialog.Exam.Name, dialog.Exam.Course, dialog.Exam.NumQuestions + "" });
 				}
 			}
 		}
@@ -85,7 +87,7 @@ namespace ExamApp
 
 		private void seeStudentExams(object sender, EventArgs e)
 		{
-
+			//StudentMenu studentMenu = new StudentMenu(new Student())
 		}
 
 		private void TeacherMenu_Load(object sender, EventArgs e)
@@ -104,17 +106,24 @@ namespace ExamApp
 			}
 
 			//load exams
-			string[] examList = File.ReadAllLines("Exams.database");
-			foreach(string examName in examList)
+			if (!File.Exists("Exams.database"))
 			{
-				string[] examData = File.ReadAllLines(examName + ".exam");
-
-				listView2.Items.Add(new ListViewItem(new string[]
+				File.WriteAllText("Exams.database", "");
+			}
+			else
+			{
+				string[] examList = File.ReadAllLines("Exams.database");
+				foreach (string examName in examList)
 				{
+					string[] examData = File.ReadAllLines(examName + ".exam");
+
+					listView1.Items.Add(new ListViewItem(new string[]
+					{
 					examName,
 					examData[0],
 					examData.Length - 3 + "",
-				}));
+					}));
+				}
 			}
 		}
 	}

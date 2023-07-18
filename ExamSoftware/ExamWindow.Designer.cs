@@ -31,7 +31,6 @@
 			questionTb = new TextBox();
 			answersTb = new CheckedListBox();
 			button1 = new Button();
-			button2 = new Button();
 			SuspendLayout();
 			// 
 			// questionTb
@@ -58,22 +57,13 @@
 			button1.TabIndex = 2;
 			button1.Text = ">";
 			button1.UseVisualStyleBackColor = true;
-			// 
-			// button2
-			// 
-			button2.Location = new Point(12, 471);
-			button2.Name = "button2";
-			button2.Size = new Size(75, 23);
-			button2.TabIndex = 3;
-			button2.Text = "<";
-			button2.UseVisualStyleBackColor = true;
+			button1.Click += button1_Click;
 			// 
 			// ExamWindow
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(800, 518);
-			Controls.Add(button2);
 			Controls.Add(button1);
 			Controls.Add(answersTb);
 			Controls.Add(questionTb);
@@ -89,6 +79,5 @@
 		private TextBox questionTb;
 		private CheckedListBox answersTb;
 		private Button button1;
-		private Button button2;
 	}
 }

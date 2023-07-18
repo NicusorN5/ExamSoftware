@@ -32,7 +32,14 @@ namespace ExamSoftware
 
 		private void StudentMenu_Load(object sender, EventArgs e)
 		{
+			if(!File.Exists("Exams.database"))
+			{
+				MessageBox.Show("No exams created!");
+				Close();
+				return;
+			}
 			string[] examList = File.ReadAllLines("Exams.database");
+
 			foreach (string examName in examList)
 			{
 				string[] examData = File.ReadAllLines(examName + ".exam");
@@ -62,12 +69,14 @@ namespace ExamSoftware
 		{
 			if(listView1.SelectedItems.Count == 1)
 			{
-				string examName = listView1.SelectedItems[0].Text;
+				string examName = listView1.SelectedItems[0].SubItems[0].Text;
 				ExamWindow examWindow = new ExamWindow(examName);
 				var r = examWindow.ShowDialog();
 				if(r == DialogResult.OK)
 				{
-					
+					File.WriteAllText(resultsFile(examName), examWindow.NumCorrectAnswers + " " + examWindow.Exam.Grade());
+					listView1.SelectedItems[0].SubItems[3].Text = examWindow.NumCorrectAnswers + "";
+					listView1.SelectedItems[0].SubItems[4].Text = examWindow.Exam.Grade() + "";
 				}
 				else
 				{
