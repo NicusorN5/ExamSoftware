@@ -12,57 +12,29 @@ namespace ExamSoftware
 		/// <summary>
 		/// The question formatted in Markdown format.
 		/// </summary>
-		public string Question
-		{
-			get { return _question; }
-		}
-		string _question;
+		public string Question { get; private set; }
 
 		/// <summary>
 		/// Gets the list of answers.
 		/// </summary>
-		public string[] Answers
-		{
-			get { return _answers; }
-		}
-		string[] _answers; 
+		public string[] Answers { get; private set; }
 
-		//Can be either a int, int[] or string.
-		public object CorrectAnswer
-		{
-			get
-			{
-				if (_correctAnswer.GetType() == typeof(int))
-					return _answers[(int)_correctAnswer];
-				else 
-					return _correctAnswer;
-			}
-		}
-		//something like std::variant<int, std::span<int>, std::string>.
-		object _correctAnswer;
+		public int[] CorrectAnswers { get; private set; }
 
-		public ExamQuestion(string question, string[] answers, string CorrectAnswer)
-		{
-			_question = question;
-			_answers = answers;
-			_correctAnswer = CorrectAnswer;
-		}	
-		public ExamQuestion(string question, string[] answers, int correctAnswer) 
-		{
-			_question = question;
-			_answers = answers;
-			_correctAnswer = correctAnswer;
-		}
 		public ExamQuestion(string question, string[] answers, int[] correctAnswers)
 		{
-			_question = question;
-			_answers = answers;
-			_correctAnswer = correctAnswers;
+			Question = question;
+			Answers = answers;
+			CorrectAnswers = correctAnswers;
 		}
 
-		public bool VerifyAnswer(object answer) 
+		public bool VerifyAnswer(string answer) 
 		{
-			return answer == CorrectAnswer;
+			foreach(string qanswer in Answers)
+			{
+				if (qanswer == answer) return true;
+			}
+			return false;
 		}
 	}
 }

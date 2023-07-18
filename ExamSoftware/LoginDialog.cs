@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-
+using ExamSoftware;
 
 namespace ExamApp
 {
@@ -21,6 +21,13 @@ namespace ExamApp
 
 		private void button1_Click(object sender, EventArgs e)
 		{
+			if(string.IsNullOrEmpty(firstNameTextbox.Text) ||
+			   string.IsNullOrEmpty(lastNameTextbox.Text) ||
+			   string.IsNullOrEmpty(passwordTextbox.Text))
+			{
+					return;
+			}
+
 			if (File.Exists("Database.users"))
 			{
 				var data = File.ReadAllLines("Database.users");
@@ -42,7 +49,7 @@ namespace ExamApp
 
 								case "student":
 								default:
-									//todo: show student menu
+									
 									break;
 							}
 
@@ -71,7 +78,9 @@ namespace ExamApp
 					}
 					else
 					{
-
+						var studentMenu = new StudentMenu(new Student(0, accData[0], accData[1], DateTime.MinValue));
+						studentMenu.ShowDialog();
+						Close();
 					}
 
 					File.AppendAllLines("Database.users", accData);

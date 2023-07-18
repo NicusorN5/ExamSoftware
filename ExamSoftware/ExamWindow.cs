@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ExamSoftware;
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +14,25 @@ namespace ExamApp
 {
 	public partial class ExamWindow : Form
 	{
-		public ExamWindow()
+		Exam exam;
+
+		public ExamWindow(string text)
 		{
 			InitializeComponent();
+
+			exam = Exam.ReadFromFiles(text);
+
+			foreach(ExamQuestion examQuestion in exam.Questions)
+			{
+
+			}
+		}
+
+		public float Answers = 0;
+
+		private void ExamWindow_Load(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

@@ -17,8 +17,25 @@ namespace ExamApp
 		public ExamCreator()
 		{
 			InitializeComponent();
+
 			questions = new List<ExamQuestion>(5);
+			questions.Add(null);
+
+			correctAnswers = new List<int>();
 		}
+
+		public ExamCreator(Exam exam)
+		{
+			examNameTextbox.Text = exam.Name;
+			courseName.Text = exam.Course;
+			minimalScoreTb.Text = exam.MinimumGrade + "";
+			freePointsTb.Text = exam.FreePoints + "";
+
+			questions = (List<ExamQuestion>?)exam.Questions;
+
+			loadQuestion(0);
+		}
+
 		public Exam Exam { get; private set; }
 
 		public List<ExamQuestion> questions;
@@ -31,6 +48,8 @@ namespace ExamApp
 		private void btnOk_Click(object sender, EventArgs e)
 		{
 			Exam = new Exam(
+				examNameTextbox.Text,
+				courseName.Text,
 				_numQuestions,
 				Convert.ToSingle(minimalScoreTb.Text),
 				Convert.ToSingle(freePointsTb.Text),
@@ -43,94 +62,91 @@ namespace ExamApp
 
 		private void previousQuestion_Click(object sender, EventArgs e)
 		{
-			currentQuestionIndex -= 1;
-
 			if (currentQuestionIndex == 0)
 				previousQuestion.Enabled = false;
 
-			setTextboxes();
+			if (currentQuestionIndex != 0)
+				loadQuestion(currentQuestionIndex - 1);
 		}
 
 		private void nextQuestion_Click(object sender, EventArgs e)
 		{
-			if (currentQuestionIndex == 0)
+			if (currentQuestionIndex == 0) // 0 -> 1
 				previousQuestion.Enabled = true;
 
-			if(currentQuestionIndex > questions.Count - 1)
-			{
-				questions.Add(null);
-			}
-
-			List<string> answers = new List<string>();
-			foreach(string answer in listBox1.Items )
-			{
-				if(answer.StartsWith("[CORRECT]"))
-				{
-					answer.Remove(0, "[CORRECT]".Length);
-				}
-				answers.Add(answer);
-			}
-
-			if(answers.Count == 1)
-			{
-				questions[currentQuestionIndex] = new ExamQuestion(questionTextbox.Text, null, answers[0]);
-			}
-			if (correctAnswers.Count > 1)
-			{
-				questions[currentQuestionIndex] = new ExamQuestion(questionTextbox.Text, answers.ToArray(), correctAnswers.ToArray());
-			}
-			if(correctAnswers.Count == 1)
-			{
-				questions[currentQuestionIndex] = new ExamQuestion(questionTextbox.Text, answers.ToArray(), correctAnswers[0]);
-			}
-
-			currentQuestionIndex += 1;
-			setTextboxes();
+			loadQuestion(currentQuestionIndex + 1);
 		}
 
-		private void setTextboxes()
+		void loadQuestion(int index)
 		{
-			listBox1.Items.Clear();
-			if (questions[currentQuestionIndex] != null)
+			bool chk = saveCurrentAnswer();
+			if (chk)
 			{
-				var q = questions[currentQuestionIndex];
-				questionTextbox.Text = q.Question;
+				currentQuestionIndex = index;
 
-				if (q.Answers.Count() == 1)
+				checkedListBox1.Items.Clear();
+				if (questions.Count <= index) //if no answer was set before
 				{
-					listBox1.Items.Add(q.CorrectAnswer as string);
+					questions.Add(null);
+					questionTextbox.Text = "";
 				}
-				else
+				else if (questions[index] != null) //otherwise read existing data
 				{
-					for (int i = 0; i < q.Answers.Count(); i++)
+					questionTextbox.Text = questions[index].Question;
+
+					foreach (string question in questions[index].Answers)
 					{
-						string item = q.Answers[i];
-						if (q.CorrectAnswer is int[] lst)
+						checkedListBox1.Items.Add(question);
+					}
+
+					if (questions[index].CorrectAnswers != null)
+					{
+						foreach (int correctAnswerIndex in questions[index].CorrectAnswers)
 						{
-							for (int j = 0; j < lst.Length; j++)
-							{
-								if (lst[j] == i)
-								{
-									listBox1.Items.Add("[CORRECT]" + item);
-								}
-							}
-						}
-						else if(q.CorrectAnswer is int idAnswer)
-						{
-							if(idAnswer == i)
-							{
-								listBox1.Items.Add("[CORRECT]" + item);
-							}
+							checkedListBox1.SetItemChecked(correctAnswerIndex, true);
 						}
 					}
 				}
 			}
-			
+			else MessageBox.Show("Please select atleast one valid answer!", "Invalid question", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+		}
+
+		bool saveCurrentAnswer()
+		{
+			string[] allAnswers = new string[checkedListBox1.Items.Count];
+			for (int i = 0; i < allAnswers.Length; i++)
+			{
+				allAnswers[i] = checkedListBox1.Items[i] as string;
+			}
+
+			int[] correctAnswers = new int[checkedListBox1.CheckedItems.Count];
+			for (int i = 0; i < correctAnswers.Length; i++)
+			{
+				correctAnswers[i] = checkedListBox1.CheckedIndices[i];
+			}
+
+			switch (correctAnswers.Length)
+			{
+				case 0:
+					questions[currentQuestionIndex] = new ExamQuestion(questionTextbox.Text, allAnswers, null);
+					return true;
+				case 1:
+					questions[currentQuestionIndex] = new ExamQuestion(questionTextbox.Text, allAnswers, new int[] { checkedListBox1.CheckedIndices[0] });
+					return true;
+				default:
+					questions[currentQuestionIndex] = new ExamQuestion(questionTextbox.Text, allAnswers, correctAnswers);
+					return true;
+			}
 		}
 
 		private void addAnswer_Click(object sender, EventArgs e)
 		{
-
+			AddAnswerDialog dialog = new AddAnswerDialog();
+			var r = dialog.ShowDialog();
+			if (r == DialogResult.OK)
+			{
+				checkedListBox1.Items.Add(dialog.Answer);
+			}
 		}
 
 		private void btnCancel_Click(object sender, EventArgs e)
@@ -139,22 +155,10 @@ namespace ExamApp
 			Close();
 		}
 
-		private void markAsCorrect_Click(object sender, EventArgs e)
-		{
-			foreach(int selectedItem in listBox1.SelectedIndices) 
-			{
-				if (!listBox1.Items[selectedItem].ToString().StartsWith("[CORRECT]"))
-				{
-					listBox1.Items[selectedItem] = "[CORRECT]" + listBox1.Items[selectedItem];
-				}
-				else listBox1.Items[selectedItem] = listBox1.Items[selectedItem].ToString().Remove(0, "[CORRECT]".Length);
-			}
-		}
-
 		private void removeAnswer_Click(object sender, EventArgs e)
 		{
-			if (listBox1.SelectedIndex > 0)
-				listBox1.Items.RemoveAt(listBox1.SelectedIndex);
+			if (checkedListBox1.SelectedIndex >= 0)
+				checkedListBox1.Items.RemoveAt(checkedListBox1.SelectedIndex);
 		}
 	}
 }
